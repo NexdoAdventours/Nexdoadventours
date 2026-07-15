@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<script>if(location.hash.match(/(reset|confirmation|invite)_token/))location.href='/admin/'+location.hash</script>
+<script>if(location.hash.match(/(reset|confirmation|invite)_token/))location.replace('/admin/'+location.hash)</script>
   <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;">
     <h1 style="font-size:6rem;color:var(--primary);margin-bottom:10px;">404</h1>
     <h2 style="color:var(--dark);margin-bottom:15px;">Page Not Found</h2>
