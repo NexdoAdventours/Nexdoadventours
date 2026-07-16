@@ -1,3 +1,5 @@
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/nexdoadventours@gmail.com';
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // ------- Hero Slideshow -------
@@ -102,16 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
 
       const formData = new FormData(this);
-      fetch('/', { method: 'POST', body: formData })
-        .then(function() {
-          submitBtn.textContent = 'Message Sent!';
-          submitBtn.style.background = '#2D6A4F';
-          setTimeout(function() {
-            submitBtn.textContent = originalText;
-            submitBtn.style.background = '';
-            submitBtn.disabled = false;
-            contactForm.reset();
-          }, 3000);
+      fetch(FORM_ENDPOINT, { method: 'POST', body: formData })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            submitBtn.textContent = 'Message Sent!';
+            submitBtn.style.background = '#2D6A4F';
+            setTimeout(function() {
+              submitBtn.textContent = originalText;
+              submitBtn.style.background = '';
+              submitBtn.disabled = false;
+              contactForm.reset();
+            }, 3000);
+          } else { throw new Error(d.message); }
         })
         .catch(function() {
           submitBtn.textContent = 'Error — try again';
@@ -132,16 +137,19 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
 
       const formData = new FormData(this);
-      fetch('/', { method: 'POST', body: formData })
-        .then(function() {
-          submitBtn.textContent = 'Trip Request Submitted!';
-          submitBtn.style.background = '#2D6A4F';
-          setTimeout(function() {
-            submitBtn.textContent = originalText;
-            submitBtn.style.background = '';
-            submitBtn.disabled = false;
-            tripForm.reset();
-          }, 3000);
+      fetch(FORM_ENDPOINT, { method: 'POST', body: formData })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            submitBtn.textContent = 'Trip Request Submitted!';
+            submitBtn.style.background = '#2D6A4F';
+            setTimeout(function() {
+              submitBtn.textContent = originalText;
+              submitBtn.style.background = '';
+              submitBtn.disabled = false;
+              tripForm.reset();
+            }, 3000);
+          } else { throw new Error(d.message); }
         })
         .catch(function() {
           submitBtn.textContent = 'Error — try again';
@@ -163,11 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.disabled = true;
 
       const formData = new FormData(this);
-      fetch('/', { method: 'POST', body: formData })
-        .then(function() {
-          msg.innerHTML = '<i class=\"fas fa-check-circle\"></i> Thanks, ' + email + '! You\'re subscribed.';
-          msg.style.color = '#fff';
-          newsletterForm.reset();
+      fetch(FORM_ENDPOINT, { method: 'POST', body: formData })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.success) {
+            msg.innerHTML = '<i class=\"fas fa-check-circle\"></i> Thanks, ' + email + '! You\'re subscribed.';
+            msg.style.color = '#fff';
+            newsletterForm.reset();
+          } else { throw new Error(d.message); }
           btn.textContent = 'Subscribe';
           btn.disabled = false;
         })
