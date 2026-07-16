@@ -30,23 +30,22 @@
     });
   }
 
-  async function loadPackages(containerId) {
+  async function loadContent(containerId, indexPath, prefix, parser) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const fallback = container.innerHTML;
-    container.innerHTML = '';
     try {
-      const indexRes = await fetch('admin/content/packages/index.json');
-      const ymlFiles = await indexRes.json();
-      let loaded = 0;
-      for (const file of ymlFiles) {
-        const yml = await fetchText('admin/content/packages/' + file);
-        if (!yml) continue;
-        const card = parseYamlToCard(yml);
-        if (card) { container.insertAdjacentHTML('beforeend', card); loaded++; }
-      }
-      if (loaded === 0) container.innerHTML = fallback;
-    } catch(e) { container.innerHTML = fallback; console.warn('Could not load packages dynamically'); }
+      const indexRes = await fetch(indexPath);
+      const files = await indexRes.json();
+      const results = await Promise.all(files.map(f => fetchText(prefix + f)));
+      const items = results.filter(Boolean).map(parser).filter(Boolean);
+      if (items.length) { container.innerHTML = items.join(''); initObservers(); }
+      else container.innerHTML = fallback;
+    } catch(e) { container.innerHTML = fallback; console.warn('Could not load', containerId); }
+  }
+
+  async function loadPackages(containerId) {
+    await loadContent(containerId, 'admin/content/packages/index.json', 'admin/content/packages/', parseYamlToCard);
   }
 
   function parseYamlToCard(yml) {
@@ -124,22 +123,7 @@
   }
 
   async function loadBlogPosts(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const fallback = container.innerHTML;
-    container.innerHTML = '';
-    let loaded = 0;
-    try {
-      const indexRes = await fetch('admin/content/blog/index.json');
-      const mdFiles = await indexRes.json();
-      for (const file of mdFiles) {
-        const md = await fetchText('admin/content/blog/' + file);
-        if (!md) continue;
-        const post = parseMarkdownPost(md);
-        if (post) { container.insertAdjacentHTML('beforeend', post); loaded++; }
-      }
-      if (loaded === 0) container.innerHTML = fallback;
-    } catch(e) { container.innerHTML = fallback; console.warn('Could not load blog posts dynamically'); }
+    await loadContent(containerId, 'admin/content/blog/index.json', 'admin/content/blog/', parseMarkdownPost);
   }
 
   function parseMarkdownPost(md) {
@@ -186,68 +170,28 @@
     return '<p>' + html + '</p>';
   }
 
+  function parseReviewYaml(yml) {
+    const nameMatch = yml.match(/name:\s*"([^"]+)"/);
+    const ratingMatch = yml.match(/rating:\s*(\d+)/);
+    const textMatch = yml.match(/text:\s*"([^"]+)"/);
+    if (!nameMatch || !textMatch) return null;
+    const stars = parseInt(ratingMatch ? ratingMatch[1] : 5);
+    return `<div class="review-card animate-on-scroll"><div class="stars">${'<i class="fas fa-star"></i>'.repeat(stars)}</div><p>"${textMatch[1]}"</p><h4>- ${nameMatch[1]}</h4></div>`;
+  }
+
   async function loadReviews(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const fallback = container.innerHTML;
-    container.innerHTML = '';
-    try {
-      const indexRes = await fetch('admin/content/reviews/index.json');
-      const ymlFiles = await indexRes.json();
-      let loaded = 0;
-      for (const file of ymlFiles) {
-        const yml = await fetchText('admin/content/reviews/' + file);
-        if (!yml) continue;
-        const nameMatch = yml.match(/name:\s*"([^"]+)"/);
-        const ratingMatch = yml.match(/rating:\s*(\d+)/);
-        const textMatch = yml.match(/text:\s*"([^"]+)"/);
-        if (nameMatch && textMatch) {
-          const stars = parseInt(ratingMatch ? ratingMatch[1] : 5);
-          container.insertAdjacentHTML('beforeend', `
-            <div class="review-card animate-on-scroll">
-              <div class="stars">${'<i class="fas fa-star"></i>'.repeat(stars)}</div>
-              <p>"${textMatch[1]}"</p>
-              <h4>- ${nameMatch[1]}</h4>
-            </div>
-          `);
-          loaded++;
-        }
-      }
-      if (loaded === 0) container.innerHTML = fallback;
-    } catch(e) { container.innerHTML = fallback; console.warn('Could not load reviews dynamically'); }
+    await loadContent(containerId, 'admin/content/reviews/index.json', 'admin/content/reviews/', parseReviewYaml);
+  }
+
+  function parseFaqYaml(yml) {
+    const q = yml.match(/question:\s*"([^"]+)"/);
+    const a = yml.match(/answer:\s*"([^"]+)"/);
+    if (!q || !a) return null;
+    return `<div class="faq-item animate-on-scroll"><div class="faq-question"><span>${q[1]}</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer"><div class="faq-answer-content">${a[1]}</div></div></div>`;
   }
 
   async function loadFAQ(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const fallback = container.innerHTML;
-    container.innerHTML = '';
-    try {
-      const indexRes = await fetch('admin/content/faq/index.json');
-      const ymlFiles = await indexRes.json();
-      let loaded = 0;
-      for (const file of ymlFiles) {
-        const yml = await fetchText('admin/content/faq/' + file);
-        if (!yml) continue;
-        const q = yml.match(/question:\s*"([^"]+)"/);
-        const a = yml.match(/answer:\s*"([^"]+)"/);
-        if (q && a) {
-          container.insertAdjacentHTML('beforeend', `
-            <div class="faq-item animate-on-scroll">
-              <div class="faq-question">
-                <span>${q[1]}</span>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="faq-answer">
-                <div class="faq-answer-content">${a[1]}</div>
-              </div>
-            </div>
-          `);
-          loaded++;
-        }
-      }
-      if (loaded === 0) container.innerHTML = fallback;
-    } catch(e) { container.innerHTML = fallback; console.warn('Could not load FAQs dynamically'); }
+    await loadContent(containerId, 'admin/content/faq/index.json', 'admin/content/faq/', parseFaqYaml);
   }
 
   async function loadDestinations(containerId, modalDataId) {
@@ -275,6 +219,7 @@
           </div>
         </div>
       `).join('');
+      initObservers();
     }
   }
 
@@ -294,6 +239,7 @@
         <p>${svc.description}</p>
       </div>
     `).join('');
+    initObservers();
   }
 
   async function loadHero() {
@@ -350,6 +296,6 @@
     loadBlogPosts('blogPosts');
     loadReviews('reviewsGrid');
     loadFAQ('faqContainer');
-    setTimeout(initObservers, 1000);
+    setTimeout(initObservers, 200);
   });
 })();
