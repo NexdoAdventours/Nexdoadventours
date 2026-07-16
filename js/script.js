@@ -1,4 +1,7 @@
 const FORM_ENDPOINT = 'https://formsubmit.co/ajax/nexdoadventours@gmail.com';
+// Google Sheets web app URL for storing newsletter subscribers (get from Extensions > Apps Script > Deploy > Web app)
+// Create a sheet, paste the provided script, deploy, and paste the URL below:
+const NEWSLETTER_ENDPOINT = ''; // ← Paste your Google Apps Script web app URL here
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -170,24 +173,38 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.textContent = 'Subscribing...';
       btn.disabled = true;
 
-      const formData = new FormData(this);
-      fetch(FORM_ENDPOINT, { method: 'POST', body: formData })
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-          if (d.success) {
-            msg.innerHTML = '<i class=\"fas fa-check-circle\"></i> Thanks, ' + email + '! You\'re subscribed.';
-            msg.style.color = '#fff';
-            newsletterForm.reset();
-          } else { throw new Error(d.message); }
-          btn.textContent = 'Subscribe';
-          btn.disabled = false;
-        })
-        .catch(function() {
-          msg.innerHTML = 'Something went wrong. Please try again.';
-          msg.style.color = '#e74c3c';
-          btn.textContent = 'Subscribe';
-          btn.disabled = false;
-        });
+      function onSuccess() {
+        msg.innerHTML = '<i class=\"fas fa-check-circle\"></i> Thanks, ' + email + '! You\'re subscribed.';
+        msg.style.color = '#fff';
+        newsletterForm.reset();
+        btn.textContent = 'Subscribe';
+        btn.disabled = false;
+      }
+      function onError() {
+        msg.innerHTML = 'Something went wrong. Please try again.';
+        msg.style.color = '#e74c3c';
+        btn.textContent = 'Subscribe';
+        btn.disabled = false;
+      }
+
+      if (NEWSLETTER_ENDPOINT) {
+        const fd = new FormData();
+        fd.append('email', email);
+        fd.append('source', 'Nexdo Website');
+        fetch(NEWSLETTER_ENDPOINT, { method: 'POST', mode: 'no-cors', body: fd })
+          .then(onSuccess)
+          .catch(onError);
+      } else {
+        const formData = new FormData(this);
+        fetch(FORM_ENDPOINT, { method: 'POST', body: formData })
+          .then(function(r) { return r.json(); })
+          .then(function(d) {
+            if (d.success) onSuccess(); else throw new Error(d.message);
+            btn.textContent = 'Subscribe';
+            btn.disabled = false;
+          })
+          .catch(onError);
+      }
     });
   }
 
