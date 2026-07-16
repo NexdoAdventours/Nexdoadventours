@@ -265,9 +265,11 @@
     if (s.aboutTitle && titleEl) titleEl.innerHTML = s.aboutTitle.replace('Your Story Starts Here', '<span>Your Story Starts Here</span>');
     if (s.aboutText && contentEl) {
       contentEl.querySelectorAll('p').forEach(p => p.remove());
-      const p = document.createElement('p');
-      p.textContent = s.aboutText;
-      contentEl.insertBefore(p, featList);
+      s.aboutText.split('\n\n').filter(Boolean).forEach(text => {
+        const p = document.createElement('p');
+        p.textContent = text;
+        contentEl.insertBefore(p, featList);
+      });
     }
     if (s.aboutFeatures && featList) {
       featList.innerHTML = s.aboutFeatures.map(f => `<div class="about-feature"><i class="fas fa-check"></i><span>${f}</span></div>`).join('');
