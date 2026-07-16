@@ -128,6 +128,7 @@
     if (!container) return;
     const fallback = container.innerHTML;
     container.innerHTML = '';
+    let loaded = 0;
     try {
       const indexRes = await fetch('admin/content/blog/index.json');
       const mdFiles = await indexRes.json();
@@ -135,8 +136,9 @@
         const md = await fetchText('admin/content/blog/' + file);
         if (!md) continue;
         const post = parseMarkdownPost(md);
-        if (post) container.insertAdjacentHTML('beforeend', post);
+        if (post) { container.insertAdjacentHTML('beforeend', post); loaded++; }
       }
+      if (loaded === 0) container.innerHTML = fallback;
     } catch(e) { container.innerHTML = fallback; console.warn('Could not load blog posts dynamically'); }
   }
 
@@ -154,7 +156,7 @@
     const excerpt = excerptMatch ? excerptMatch[1] : '';
     const contentId = 'blog-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     return `
-      <article class="blog-post animate-on-scroll">
+      <article class="blog-card animate-on-scroll">
         <div class="blog-image">
           <img src="${image}" alt="${title}" loading="lazy">
         </div>
