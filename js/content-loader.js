@@ -77,7 +77,7 @@
           const v = line.substring(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
           data[k] = v;
           currentKey = k;
-          if (['inclusions', 'destinations', 'exclusions', 'requirements'].includes(k)) { currentList = []; inList = true; }
+          if (['inclusions', 'destinations', 'exclusions', 'requirements'].includes(k) && (v === '' || v === undefined)) { currentList = []; inList = true; }
         }
       }
     });
@@ -174,8 +174,9 @@
     let html = md.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-    html = html.replace(/^\*\*(.+?)\*\*/gm, '<strong>$1</strong>');
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
     html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
     html = html.replace(/—/g, '&mdash;');
     html = html.replace(/\n\n/g, '</p><p>');
@@ -202,7 +203,7 @@
           const stars = parseInt(ratingMatch ? ratingMatch[1] : 5);
           container.insertAdjacentHTML('beforeend', `
             <div class="review-card animate-on-scroll">
-              <div class="review-stars">${'<i class="fas fa-star"></i>'.repeat(stars)}</div>
+              <div class="stars">${'<i class="fas fa-star"></i>'.repeat(stars)}</div>
               <p>"${textMatch[1]}"</p>
               <h4>- ${nameMatch[1]}</h4>
             </div>
@@ -266,7 +267,7 @@
       container.innerHTML = settings.destinations.map(d => `
         <div class="destination-card animate-on-scroll" onclick="openDestModal('${d.id}')">
           <img src="${d.image}" alt="${d.title}" loading="lazy">
-          <div class="dest-overlay">
+          <div class="destination-overlay">
             <h3>${d.title}</h3>
             <p><i class="fas fa-info-circle"></i> Click to explore</p>
           </div>
@@ -285,8 +286,8 @@
     if (s.servicesTitle && sectionTitle) sectionTitle.textContent = s.servicesTitle;
     if (s.servicesSubtitle && sectionSubtitle) sectionSubtitle.textContent = s.servicesSubtitle;
     grid.innerHTML = s.services.map(svc => `
-      <div class="service-card animate-on-scroll">
-        <i class="${svc.icon}" style="font-size:2.5rem;color:var(--logo-orange);margin-bottom:15px;"></i>
+      <div class="service-card animate-on-scroll"${svc.id ? ` id="${svc.id}"` : ''}>
+        <div class="service-icon"><i class="${svc.icon}"></i></div>
         <h3>${svc.title}</h3>
         <p>${svc.description}</p>
       </div>
@@ -299,25 +300,29 @@
     const badgeEl = document.querySelector('.hero-badge');
     const headingEl = document.querySelector('.hero-content h1');
     const descEl = document.querySelector('.hero-content p');
-    const travelerEl = document.querySelector('[data-stat="travelers"]');
-    const destStatEl = document.querySelector('[data-stat="destinations"]');
+    const statEls = document.querySelectorAll('.hero-stat h3');
     if (s.heroBadge && badgeEl) badgeEl.innerHTML = s.heroBadge;
     if (s.heroHeading && headingEl) headingEl.innerHTML = s.heroHeading.replace('Nexdo Adventours', '<span>Nexdo Adventours</span>');
     if (s.heroDescription && descEl) descEl.textContent = s.heroDescription;
-    if (s.heroTravelers && travelerEl) travelerEl.textContent = s.heroTravelers;
-    if (s.heroDestinations && destStatEl) destStatEl.textContent = s.heroDestinations;
+    if (s.heroTravelers && statEls[0]) statEls[0].textContent = s.heroTravelers;
+    if (s.heroDestinations && statEls[1]) statEls[1].textContent = s.heroDestinations;
   }
 
   async function loadAbout() {
     const s = await fetchJSON('admin/content/settings.json');
     if (!s) return;
-    const titleEl = document.querySelector('#about .section-title, #about h2');
-    const textEl = document.querySelector('#about .about-text p');
+    const titleEl = document.querySelector('#about .about-content h2');
+    const contentEl = document.querySelector('#about .about-content');
     const featList = document.querySelector('#about .about-features');
-    if (s.aboutTitle && titleEl) titleEl.innerHTML = s.aboutTitle.replace('Authentic Experiences', '<span>Authentic Experiences</span>');
-    if (s.aboutText && textEl) textEl.textContent = s.aboutText;
+    if (s.aboutTitle && titleEl) titleEl.innerHTML = s.aboutTitle.replace('Your Story Starts Here', '<span>Your Story Starts Here</span>');
+    if (s.aboutText && contentEl) {
+      contentEl.querySelectorAll('p').forEach(p => p.remove());
+      const p = document.createElement('p');
+      p.textContent = s.aboutText;
+      contentEl.insertBefore(p, featList);
+    }
     if (s.aboutFeatures && featList) {
-      featList.innerHTML = s.aboutFeatures.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('');
+      featList.innerHTML = s.aboutFeatures.map(f => `<div class="about-feature"><i class="fas fa-check"></i><span>${f}</span></div>`).join('');
     }
   }
 

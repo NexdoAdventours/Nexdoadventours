@@ -82,11 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  document.querySelectorAll('.animate-on-scroll').forEach(el => {
+  document.querySelectorAll('.animate-on-scroll:not(.visible)').forEach(el => {
     observer.observe(el);
   });
 

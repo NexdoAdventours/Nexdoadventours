@@ -17,11 +17,11 @@
   "servicesTitle": "Our Services",
   "servicesSubtitle": "Tailored experiences for every kind of traveler",
   "services": [
-    {"icon": "fas fa-safari", "title": "Tailored Safaris", "description": "Customized wildlife tours to Uganda's best national parks including Queen Elizabeth and Murchison Falls."},
-    {"icon": "fas fa-paw", "title": "Gorilla & Chimp Trekking", "description": "Bwindi Impenetrable Forest and Kibale Forest experiences with expert guides tracking primates."},
-    {"icon": "fas fa-hands", "title": "Cultural Immersion", "description": "Explore Kampala's history, local markets, and community projects for a truly Ugandan experience."},
-    {"icon": "fas fa-water", "title": "Adventure Activities", "description": "Rafting in Jinja, hiking, nature walks, and more adrenaline-pumping adventures across Uganda."},
-    {"icon": "fas fa-users", "title": "Groups & Private Tours", "description": "Flexibility for any size or type of trip. We handle everything from solo travelers to large groups."}
+    {"id": "tailored-safaris", "icon": "fas fa-safari", "title": "Tailored Safaris", "description": "Customized wildlife tours to Uganda's best national parks including Queen Elizabeth and Murchison Falls."},
+    {"id": "gorilla-trekking", "icon": "fas fa-paw", "title": "Gorilla & Chimp Trekking", "description": "Bwindi Impenetrable Forest and Kibale Forest experiences with expert guides tracking primates."},
+    {"id": "cultural-immersion", "icon": "fas fa-hands", "title": "Cultural Immersion", "description": "Explore Kampala's history, local markets, and community projects for a truly Ugandan experience."},
+    {"id": "adventure-activities", "icon": "fas fa-water", "title": "Adventure Activities", "description": "Rafting in Jinja, hiking, nature walks, and more adrenaline-pumping adventures across Uganda."},
+    {"id": "groups-private-tours", "icon": "fas fa-users", "title": "Groups & Private Tours", "description": "Flexibility for any size or type of trip. We handle everything from solo travelers to large groups."}
   ],
   "ctaTitle": "Ready for Your Next Adventure?",
   "ctaText": "Whether it's a gorilla trek, a Jinja rafting trip, or a curated group experience — let's make it happen.",
