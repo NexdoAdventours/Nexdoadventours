@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<script>if(location.hash.match(/(reset|confirmation|invite)_token/))location.href='/admin/'+location.hash</script>
+<script>if(location.hash.match(/(reset|confirmation|invite|access)_token/))location.replace('/admin/'+location.hash)</script>
 
   <!-- WhatsApp Float -->
   <a href="https://wa.me/256782725895" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
