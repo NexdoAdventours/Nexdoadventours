@@ -40,7 +40,7 @@
       const results = await Promise.all(files.map(f => fetchText(prefix + f)));
       const items = results.filter(Boolean).map(parser).filter(Boolean);
       if (items.length) { container.innerHTML = items.join(''); initObservers(); }
-      else container.innerHTML = fallback;
+      else { container.innerHTML = fallback; initObservers(); }
     } catch(e) { container.innerHTML = fallback; console.warn('Could not load', containerId); }
   }
 
