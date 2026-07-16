@@ -33,17 +33,20 @@
   async function loadPackages(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const fallback = container.innerHTML;
     container.innerHTML = '';
     try {
       const indexRes = await fetch('admin/content/packages/index.json');
       const ymlFiles = await indexRes.json();
+      let loaded = 0;
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/packages/' + file);
         if (!yml) continue;
         const card = parseYamlToCard(yml);
-        if (card) container.insertAdjacentHTML('beforeend', card);
+        if (card) { container.insertAdjacentHTML('beforeend', card); loaded++; }
       }
-    } catch(e) {console.warn('Could not load packages dynamically');}
+      if (loaded === 0) container.innerHTML = fallback;
+    } catch(e) { container.innerHTML = fallback; console.warn('Could not load packages dynamically'); }
   }
 
   function parseYamlToCard(yml) {
@@ -52,21 +55,29 @@
     let currentKey = '', currentList = [], inList = false;
     lines.forEach(line => {
       const trimmed = line.trim();
+      const indent = line.length - line.trimStart().length;
       if (trimmed.startsWith('- ')) {
-        if (inList) currentList.push(trimmed.replace(/^- /, '').trim());
+        if (!inList) { currentList = []; inList = true; }
+        let item = trimmed.replace(/^- (name:\s*)?/, '').trim();
+        item = item.replace(/^["']|["']$/g, '');
+        currentList.push(item);
         return;
-      } else if (trimmed.startsWith('- name:')) {
-        if (inList) currentList.push(trimmed.replace(/^- name: /, '').trim());
-        return;
-      } else {
-        if (inList && currentList.length) { data[currentKey] = currentList; currentList = []; inList = false; }
+      } else if (inList) {
+        if (indent === 0) {
+          data[currentKey] = currentList;
+          currentList = []; inList = false;
+        } else {
+          return;
+        }
+      }
+      if (!inList) {
         const colonIdx = line.indexOf(':');
         if (colonIdx > 0) {
           const k = line.substring(0, colonIdx).trim();
           const v = line.substring(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
           data[k] = v;
           currentKey = k;
-          if (['inclusions', 'destinations', 'exclusions', 'requirements'].includes(k)) inList = true;
+          if (['inclusions', 'destinations', 'exclusions', 'requirements'].includes(k)) { currentList = []; inList = true; }
         }
       }
     });
@@ -115,6 +126,7 @@
   async function loadBlogPosts(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const fallback = container.innerHTML;
     container.innerHTML = '';
     try {
       const indexRes = await fetch('admin/content/blog/index.json');
@@ -125,7 +137,7 @@
         const post = parseMarkdownPost(md);
         if (post) container.insertAdjacentHTML('beforeend', post);
       }
-    } catch(e) {console.warn('Could not load blog posts dynamically');}
+    } catch(e) { container.innerHTML = fallback; console.warn('Could not load blog posts dynamically'); }
   }
 
   function parseMarkdownPost(md) {
@@ -174,10 +186,12 @@
   async function loadReviews(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const fallback = container.innerHTML;
     container.innerHTML = '';
     try {
       const indexRes = await fetch('admin/content/reviews/index.json');
       const ymlFiles = await indexRes.json();
+      let loaded = 0;
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/reviews/' + file);
         if (!yml) continue;
@@ -193,18 +207,22 @@
               <h4>- ${nameMatch[1]}</h4>
             </div>
           `);
+          loaded++;
         }
       }
-    } catch(e) {console.warn('Could not load reviews dynamically');}
+      if (loaded === 0) container.innerHTML = fallback;
+    } catch(e) { container.innerHTML = fallback; console.warn('Could not load reviews dynamically'); }
   }
 
   async function loadFAQ(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
+    const fallback = container.innerHTML;
     container.innerHTML = '';
     try {
       const indexRes = await fetch('admin/content/faq/index.json');
       const ymlFiles = await indexRes.json();
+      let loaded = 0;
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/faq/' + file);
         if (!yml) continue;
@@ -222,9 +240,11 @@
               </div>
             </div>
           `);
+          loaded++;
         }
       }
-    } catch(e) {console.warn('Could not load FAQs dynamically');}
+      if (loaded === 0) container.innerHTML = fallback;
+    } catch(e) { container.innerHTML = fallback; console.warn('Could not load FAQs dynamically'); }
   }
 
   async function loadDestinations(containerId, modalDataId) {
