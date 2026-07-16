@@ -61,16 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // ------- FAQ Accordion -------
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const question = item.querySelector('.faq-question');
-    question.addEventListener('click', function() {
-      const isActive = item.classList.contains('active');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-      if (!isActive) {
-        item.classList.add('active');
-      }
-    });
+  // ------- FAQ Accordion (delegated) -------
+  document.addEventListener('click', function(e) {
+    const question = e.target.closest('.faq-question');
+    if (!question) return;
+    const item = question.closest('.faq-item');
+    if (!item) return;
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!isActive) item.classList.add('active');
   });
 
   // ------- Scroll Animation -------

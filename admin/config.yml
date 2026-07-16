@@ -7,52 +7,36 @@ public_folder: "/images"
 
 collections:
   - name: "settings"
-    label: "Site Settings"
+    label: "All Settings"
     editor:
       preview: false
     files:
       - name: "general"
-        label: "General Info"
+        label: "Site Settings"
         file: "admin/content/settings.json"
+        description: "Edit hero, about, services, destinations, contact info & more"
         fields:
           - { label: "Phone", name: "phone", widget: "string", default: "+256 782 725 895" }
           - { label: "Email", name: "email", widget: "string", default: "nexdoadventours@gmail.com" }
           - { label: "Address", name: "address", widget: "string", default: "Numak Tower, Kyaggwe Rd, Kampala" }
           - { label: "WhatsApp Link", name: "whatsapp", widget: "string", default: "https://wa.me/256782725895" }
-          - { label: "Community Link", name: "community", widget: "string", default: "https://chat.whatsapp.com/IbzYHj05mfh3iBCMGWgY1C" }
-
-  - name: "homepage"
-    label: "Homepage"
-    editor:
-      preview: false
-    files:
-      - name: "hero"
-        label: "Hero Section"
-        file: "admin/content/hero.md"
-        fields:
-          - { label: "Heading", name: "heading", widget: "string", default: "Welcome to Nexdo Adventours Ltd" }
-          - { label: "Description", name: "description", widget: "text", default: "Discover the Pearl of Africa with Us..." }
-          - { label: "Stats - Happy Travelers", name: "travelers", widget: "string", default: "250+" }
-          - { label: "Stats - Destinations", name: "destinations", widget: "string", default: "12+" }
-
-      - name: "about"
-        label: "About Section"
-        file: "admin/content/about.md"
-        fields:
-          - { label: "Title", name: "title", widget: "string", default: "About Nexdo Adventours" }
-          - { label: "Content", name: "content", widget: "markdown" }
-
-      - name: "services"
-        label: "Services Section"
-        file: "admin/content/services.md"
-        fields:
-          - { label: "Title", name: "title", widget: "string", default: "Our Services" }
-          - { label: "Subtitle", name: "subtitle", widget: "string", default: "Tailored experiences for every kind of traveler" }
-          - name: "services"
-            label: "Services"
+          - { label: "Community WhatsApp Link", name: "community", widget: "string" }
+          - { label: "Office Hours", name: "officeHours", widget: "string", default: "Mon-Fri 8:00 AM - 6:00 PM, Sat 9:00 AM - 4:00 PM" }
+          - { label: "Hero Badge", name: "heroBadge", widget: "string", default: "Kampala, Uganda" }
+          - { label: "Hero Heading", name: "heroHeading", widget: "string", default: "Welcome to Nexdo Adventours Ltd" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text", default: "Discover the Pearl of Africa with Us..." }
+          - { label: "Hero Stat - Travelers", name: "heroTravelers", widget: "string", default: "250+" }
+          - { label: "Hero Stat - Destinations", name: "heroDestinations", widget: "string", default: "12+" }
+          - { label: "About Title", name: "aboutTitle", widget: "string", default: "Passionate Ugandans Delivering Authentic Experiences" }
+          - { label: "About Text", name: "aboutText", widget: "text", default: "Since 2021..." }
+          - { label: "About Features", name: "aboutFeatures", widget: "list", default: ["Expert Local Guides", "Sustainable Tourism", "Safety First", "Authentic Experiences"], field: { label: "Feature", name: "feature", widget: "string" } }
+          - { label: "Services Title", name: "servicesTitle", widget: "string", default: "Our Services" }
+          - { label: "Services Subtitle", name: "servicesSubtitle", widget: "string", default: "Tailored experiences for every kind of traveler" }
+          - label: "Services"
+            name: "services"
             widget: "list"
             fields:
-              - { label: "Icon", name: "icon", widget: "string", hint: "Font Awesome class e.g. fas fa-safari" }
+              - { label: "Icon", name: "icon", widget: "string", hint: "e.g. fas fa-safari" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Description", name: "description", widget: "text" }
 
@@ -65,20 +49,25 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Duration", name: "duration", widget: "string" }
-      - { label: "Group Size", name: "groupSize", widget: "string" }
-      - { label: "Price", name: "price", widget: "string" }
-      - { label: "Per (e.g. per person)", name: "per", widget: "string" }
-      - { label: "Badge", name: "badge", widget: "string", required: false }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Duration", name: "duration", widget: "string", required: false }
+      - { label: "Group Size", name: "groupSize", widget: "string", required: false }
+      - { label: "Price", name: "price", widget: "string", required: false }
+      - { label: "Per (e.g. per person)", name: "per", widget: "string", required: false }
+      - { label: "Badge Label", name: "badge", widget: "string", required: false }
+      - { label: "Badge Color", name: "badgeBg", widget: "string", required: false, hint: "e.g. #b8860b" }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Note", name: "note", widget: "string", required: false }
       - label: "Inclusions"
         name: "inclusions"
         widget: "list"
         field: { label: "Item", name: "item", widget: "string" }
-      - label: "Book Now Link"
-        name: "bookLink"
-        widget: "string"
-        default: "https://wa.me/256782725895?text=Hello%2C%20Nexdo%20Adventours."
+        required: false
+      - label: "Destinations"
+        name: "destinations"
+        widget: "list"
+        required: false
+        field: { label: "Destination", name: "dest", widget: "string" }
+      - { label: "Book Now Link", name: "bookLink", widget: "string", default: "https://wa.me/256782725895", required: false }
 
   - name: "blog"
     label: "Blog Posts"
@@ -94,16 +83,17 @@ collections:
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Content", name: "body", widget: "markdown" }
 
-  - name: "gallery"
-    label: "Gallery"
-    label_singular: "Image"
-    folder: "admin/content/gallery"
+  - name: "reviews"
+    label: "Google Reviews"
+    label_singular: "Review"
+    folder: "admin/content/reviews"
     create: true
     format: "yml"
     slug: "{{slug}}"
     fields:
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure" }
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", default: 5, value_type: "int", min: 1, max: 5 }
+      - { label: "Review Text", name: "text", widget: "text" }
 
   - name: "faq"
     label: "FAQs"

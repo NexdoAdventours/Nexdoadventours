@@ -1,0 +1,59 @@
+{
+  "phone": "+256 782 725 895",
+  "email": "nexdoadventours@gmail.com",
+  "address": "Numak Tower, Opposite Equatorial Mall, Kyaggwe Road, Kampala, Uganda",
+  "whatsapp": "https://wa.me/256782725895",
+  "community": "https://chat.whatsapp.com/IbzYHj05mfh3iBCMGWgY1C",
+  "officeHours": "Mon-Fri 8:00 AM - 6:00 PM, Sat 9:00 AM - 4:00 PM",
+  "heroBadge": "Kampala, Uganda",
+  "heroHeading": "Welcome to Nexdo Adventours Ltd",
+  "heroDescription": "Discover the Pearl of Africa with Us. Located in the heart of Kampala, Uganda, we craft tailored trips that blend adventure, culture, and nature, showcasing Uganda's stunning landscapes and vibrant communities.",
+  "heroTravelers": "250+",
+  "heroDestinations": "12+",
+  "heroSince": "Since 2021",
+  "aboutTitle": "Passionate Ugandans Delivering Authentic Experiences",
+  "aboutText": "Since 2021, Nexdo Adventours Ltd has been dedicated to showcasing the best of Uganda. Safety, local insights, and sustainability drive everything we do. Our team of expert guides ensures you experience the Pearl of Africa like never before.",
+  "aboutFeatures": ["Expert Local Guides", "Sustainable Tourism", "Safety First", "Authentic Experiences"],
+  "servicesTitle": "Our Services",
+  "servicesSubtitle": "Tailored experiences for every kind of traveler",
+  "services": [
+    {"icon": "fas fa-safari", "title": "Tailored Safaris", "description": "Customized wildlife tours to Uganda's best national parks including Queen Elizabeth and Murchison Falls."},
+    {"icon": "fas fa-paw", "title": "Gorilla & Chimp Trekking", "description": "Bwindi Impenetrable Forest and Kibale Forest experiences with expert guides tracking primates."},
+    {"icon": "fas fa-hands", "title": "Cultural Immersion", "description": "Explore Kampala's history, local markets, and community projects for a truly Ugandan experience."},
+    {"icon": "fas fa-water", "title": "Adventure Activities", "description": "Rafting in Jinja, hiking, nature walks, and more adrenaline-pumping adventures across Uganda."},
+    {"icon": "fas fa-users", "title": "Groups & Private Tours", "description": "Flexibility for any size or type of trip. We handle everything from solo travelers to large groups."}
+  ],
+  "ctaTitle": "Ready for Your Next Adventure?",
+  "ctaText": "Whether it's a gorilla trek, a Jinja rafting trip, or a curated group experience — let's make it happen.",
+  "newsletterTitle": "STAY IN THE LOOP",
+  "newsletterText": "New trips land in your inbox first. Monthly destinations, early-bird spots, perks and travel inspo — curated and sent once or twice a month. No noise, just the good stuff.",
+  "communityTitle": "Join Our Travel Community",
+  "communityBenefits": ["Exclusive trip announcements", "Special community discounts", "Travel tips & inspiration", "Connect with fellow travelers"],
+  "destinations": [
+    {"id": "bwindi", "title": "Bwindi Impenetrable Forest", "image": "images/destinations/bwindi.jpg", "whyVisit": "Home to half the world's mountain gorillas, Bwindi is a UNESCO World Heritage site offering the most unforgettable wildlife encounter on earth.", "reasons": ["Track mountain gorillas in their natural habitat", "Explore ancient rainforest with over 120 mammal species", "Guided nature walks to waterfalls and Batwa cave trails", "Birdwatcher's paradise with 350+ bird species", "Community encounters with the Batwa pygmy people"]},
+    {"id": "queen", "title": "Queen Elizabeth NP", "image": "images/destinations/queen-elizabeth.jpg", "whyVisit": "Uganda's most popular national park boasts tree-climbing lions, Kazinga Channel boat cruises, and incredible biodiversity.", "reasons": ["Game drives to see lions, elephants, buffaloes, and antelope", "Boat cruise along the Kazinga Channel — hippos, crocs, birds", "Tree-climbing lions of the Ishasha sector", "Lake Katwe salt mines and flamingo watching", "Mweya Peninsula panoramic views of the Rwenzoris"]},
+    {"id": "jinja", "title": "Jinja — Adventure Hub", "image": "images/destinations/jinja.jpg", "whyVisit": "The source of the Nile River and Uganda's adrenaline capital, Jinja offers world-class adventure activities surrounded by stunning scenery.", "reasons": ["White-water rafting on the Nile (Grade 3-5 rapids)", "Bungee jumping and kayaking", "Source of the Nile boat tour", "Quad biking and horse riding along the riverbanks", "Sunset cruises and riverside dining"]},
+    {"id": "kampala", "title": "Kampala — City of Seven Hills", "image": "images/destinations/kampala.jpg", "whyVisit": "Uganda's vibrant capital blends modern energy with deep cultural roots — from bustling markets to historic sites and lively nightlife.", "reasons": ["Visit the Uganda Museum and Kasubi Tombs (UNESCO)", "Shop at Owino Market and craft villages", "Explore the Ndere Cultural Centre for music & dance", "Nightlife at Kabalagala and Acacia Avenue", "Panoramic views from the Gaddafi Mosque and Kololo Hill"]},
+    {"id": "divine", "title": "Divine Resort and Spa", "image": "images/destinations/divine-resort.jpg", "whyVisit": "A premium relaxation getaway just outside Kampala. Perfect for couples retreats, group unwinding, or solo relaxation.", "reasons": ["Swimming pool and spa treatments", "Boat rides on the resort lake", "Nature walks and flower swing", "Archery and paintball target shooting", "Live band performances and bonfire nights", "Overnight stays in luxury rooms available"]},
+    {"id": "lemala", "title": "Lemala Wild Waters Lodge", "image": "images/destinations/lemala.jpg", "whyVisit": "A stunning island lodge on the Nile with thrilling water adventures and luxury relaxation.", "reasons": ["Return boat ride to the island", "Swimming in natural Nile rock pools", "3-course lunch with wine", "Sunset views over the Nile", "Transport from Kampala in a luxury Landcruiser", "Overnight packages available for 2+ days"]}
+  ],
+  "travelCalendar": [
+    {"month": "Jan", "event": "New Year Safari Deals"},
+    {"month": "Feb", "event": "Valentine's Getaway Packages"},
+    {"month": "Mar", "event": "Easter Festivities"},
+    {"month": "Apr", "event": "Gorilla Trekking Season"},
+    {"month": "May", "event": "Labour Day Celebrations"},
+    {"month": "Jun", "event": "Heroes Day Events"},
+    {"month": "Jul", "event": "Family Holiday Packages"},
+    {"month": "Aug", "event": "Tugende Efort Festival"},
+    {"month": "Sep", "event": "Nyege Nyege Festival"},
+    {"month": "Oct", "event": "Independence Day"},
+    {"month": "Nov", "event": "Cultural Tours & Festivals"},
+    {"month": "Dec", "event": "Christmas Celebrations"}
+  ],
+  "tugendeEfort": {
+    "title": "Tugende Efort — Fort Portal Experience",
+    "dates": "28th – 30th Aug 2026 (3 Days / 2 Nights)",
+    "description": "Join us in August for Tugende Efort, an exclusive Nexdo Adventours experience in the heart of the Rwenzori region. Enjoy authentic culture, music, and unforgettable moments curated by our team."
+  }
+}
