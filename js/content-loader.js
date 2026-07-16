@@ -35,16 +35,8 @@
     if (!container) return;
     container.innerHTML = '';
     try {
-      const res = await fetch('admin/content/packages/');
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = doc.querySelectorAll('a[href]');
-      const ymlFiles = [];
-      links.forEach(a => {
-        const href = a.getAttribute('href');
-        if (href && href.endsWith('.yml') && !href.startsWith('?')) ymlFiles.push(href);
-      });
+      const indexRes = await fetch('admin/content/packages/index.json');
+      const ymlFiles = await indexRes.json();
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/packages/' + file);
         if (!yml) continue;
@@ -125,16 +117,8 @@
     if (!container) return;
     container.innerHTML = '';
     try {
-      const res = await fetch('admin/content/blog/');
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = doc.querySelectorAll('a[href]');
-      const mdFiles = [];
-      links.forEach(a => {
-        const href = a.getAttribute('href');
-        if (href && href.endsWith('.md') && !href.startsWith('?')) mdFiles.push(href);
-      });
+      const indexRes = await fetch('admin/content/blog/index.json');
+      const mdFiles = await indexRes.json();
       for (const file of mdFiles) {
         const md = await fetchText('admin/content/blog/' + file);
         if (!md) continue;
@@ -192,16 +176,8 @@
     if (!container) return;
     container.innerHTML = '';
     try {
-      const res = await fetch('admin/content/reviews/');
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = doc.querySelectorAll('a[href]');
-      const ymlFiles = [];
-      links.forEach(a => {
-        const href = a.getAttribute('href');
-        if (href && href.endsWith('.yml') && !href.startsWith('?')) ymlFiles.push(href);
-      });
+      const indexRes = await fetch('admin/content/reviews/index.json');
+      const ymlFiles = await indexRes.json();
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/reviews/' + file);
         if (!yml) continue;
@@ -227,16 +203,8 @@
     if (!container) return;
     container.innerHTML = '';
     try {
-      const res = await fetch('admin/content/faq/');
-      const html = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = doc.querySelectorAll('a[href]');
-      const ymlFiles = [];
-      links.forEach(a => {
-        const href = a.getAttribute('href');
-        if (href && href.endsWith('.yml') && !href.startsWith('?')) ymlFiles.push(href);
-      });
+      const indexRes = await fetch('admin/content/faq/index.json');
+      const ymlFiles = await indexRes.json();
       for (const file of ymlFiles) {
         const yml = await fetchText('admin/content/faq/' + file);
         if (!yml) continue;
