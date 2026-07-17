@@ -12,6 +12,17 @@ function doPost(e) {
     }
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Subscribers')
       .appendRow([new Date(), e.parameter.email, e.parameter.source || 'Website']);
+
+    MailApp.sendEmail({
+      to: 'nexdoadventours@gmail.com',
+      subject: 'New Newsletter Subscriber',
+      htmlBody: '<h2>New Subscriber</h2>' +
+        '<p><strong>Email:</strong> ' + e.parameter.email + '</p>' +
+        '<p><strong>Source:</strong> ' + (e.parameter.source || 'Website') + '</p>' +
+        '<p><strong>Date:</strong> ' + new Date() + '</p>' +
+        '<p><em>This is an automated notification from your Nexdo Adventours site.</em></p>'
+    });
+
     return ContentService.createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch(err) {
