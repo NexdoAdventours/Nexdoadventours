@@ -37,21 +37,21 @@ collections:
             name: "services"
             widget: "list"
             fields:
-               - { label: "Icon", name: "icon", widget: "string", hint: "e.g. fas fa-safari" }
-               - { label: "Title", name: "title", widget: "string" }
-               - { label: "Description", name: "description", widget: "text" }
-           - label: "Destinations"
-             name: "destinations"
-             widget: "list"
-             fields:
-               - { label: "ID", name: "id", widget: "string" }
-               - { label: "Title", name: "title", widget: "string" }
-               - { label: "Image Path", name: "image", widget: "string", hint: "e.g. images/destinations/murchison.jpg" }
-               - { label: "Why Visit", name: "whyVisit", widget: "text" }
-               - label: "Reasons"
-                 name: "reasons"
-                 widget: "list"
-                 field: { label: "Reason", name: "reason", widget: "string" }
+              - { label: "Icon", name: "icon", widget: "string", hint: "e.g. fas fa-safari" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - label: "Destinations"
+            name: "destinations"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Image Path", name: "image", widget: "string", hint: "e.g. images/destinations/murchison.jpg" }
+              - { label: "Why Visit", name: "whyVisit", widget: "text" }
+              - label: "Reasons"
+                name: "reasons"
+                widget: "list"
+                field: { label: "Reason", name: "reason", widget: "string" }
 
   - name: "packages"
     label: "Tour Packages"
