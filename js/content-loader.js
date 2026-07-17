@@ -284,20 +284,41 @@
     }
   }
 
+  function parseGalleryYaml(yml) {
+    const lines = yml.split('\n');
+    const data = {};
+    lines.forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx < 0) return;
+      const k = line.substring(0, idx).trim();
+      let v = line.substring(idx + 1).trim().replace(/^["']|["']$/g, '');
+      if (k === 'hidden') v = v === 'true';
+      data[k] = v;
+    });
+    if (!data.image) return '';
+    const hidden = data.hidden ? ' gallery-hidden' : '';
+    return `<div class="gallery-item${hidden}"><img src="${data.image}" alt="${data.alt || 'Uganda adventure'}" loading="lazy"></div>`;
+  }
+
   async function loadGallery() {
     const container = document.getElementById('galleryGrid');
     if (!container) return;
     const fallback = container.innerHTML;
     try {
-      const data = await fetchJSON('admin/content/gallery.json');
-      if (!data) { container.innerHTML = fallback; initObservers(); return; }
-      const items = data.gallery || data;
+      let files = [];
+      try {
+        const res = await fetch('https://api.github.com/repos/NexdoAdventours/Nexdoadventours/contents/admin/content/gallery-files', {cache: 'no-cache'});
+        if (res.ok) {
+          const data = await res.json();
+          files = data.filter(f => f.name.endsWith('.yml') && f.name !== 'index.json').map(f => f.name);
+        }
+      } catch(e) {}
+      if (!files.length) files = await fetchJSON('admin/content/gallery-files/index.json') || [];
+      if (!files.length) { container.innerHTML = fallback; initObservers(); return; }
+      const results = await Promise.all(files.map(f => fetchText('admin/content/gallery-files/' + f)));
+      const items = results.filter(Boolean).map(parseGalleryYaml).filter(Boolean);
       if (!items.length) { container.innerHTML = fallback; initObservers(); return; }
-      container.innerHTML = items.map(img => `
-        <div class="gallery-item${img.hidden ? ' gallery-hidden' : ''}">
-          <img src="${img.image}" alt="${img.alt || 'Uganda adventure'}" loading="lazy">
-        </div>
-      `).join('');
+      container.innerHTML = items.join('');
       initObservers();
     } catch(e) { container.innerHTML = fallback; initObservers(); console.warn('Could not load gallery'); }
   }
