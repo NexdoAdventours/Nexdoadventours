@@ -1,7 +1,7 @@
 const FORM_ENDPOINT = 'https://formsubmit.co/ajax/nexdoadventours@gmail.com';
 // Google Sheets web app URL for storing newsletter subscribers (get from Extensions > Apps Script > Deploy > Web app)
 // Create a sheet, paste the provided script, deploy, and paste the URL below:
-const NEWSLETTER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxA_8fKLoXBRDa7Ovn9yBhXLFdFEX1_Iv6HTzsR3SfVIKbnnkoQmpmYCTDqSuNqYh5RIg/exec';
+const NEWSLETTER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyXqausHiTUp6YpG2v4ONELhDHUqMocVjgMS_uHT1msby1r0FVYz1ieHsS-pInus5a-Cg/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
 
