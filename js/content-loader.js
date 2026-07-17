@@ -1,11 +1,11 @@
 (function() {
   'use strict';
 
-  const cb = () => '?t=' + Date.now();
+  const cacheBust = '?v=' + Math.floor(Date.now() / 60000);
 
   async function fetchJSON(url) {
     try {
-      const res = await fetch(url + cb());
+      const res = await fetch(url + cacheBust);
       if (!res.ok) {console.warn('Failed to load', url);return null;}
       return await res.json();
     } catch(e) {console.warn('Error loading', url);return null;}
@@ -13,7 +13,7 @@
 
   async function fetchText(url) {
     try {
-      const res = await fetch(url + cb());
+      const res = await fetch(url + cacheBust);
       if (!res.ok) {console.warn('Failed to load', url);return null;}
       return await res.text();
     } catch(e) {console.warn('Error loading', url);return null;}
