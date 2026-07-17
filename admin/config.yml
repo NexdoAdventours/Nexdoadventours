@@ -133,6 +133,6 @@ collections:
             name: "gallery"
             widget: "list"
             fields:
-              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Image Filename", name: "image", widget: "string", hint: "Upload via Media button (top bar), then copy the filename (e.g. my-photo.jpg)" }
               - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure", required: false }
               - { label: "Hidden (Show More)", name: "hidden", widget: "boolean", default: false, required: false, hint: "Enable to hide behind 'Show More' button" }
