@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
+  const cb = () => '?t=' + Date.now();
+
   async function fetchJSON(url) {
     try {
-      const res = await fetch(url);
+      const res = await fetch(url + cb());
       if (!res.ok) {console.warn('Failed to load', url);return null;}
       return await res.json();
     } catch(e) {console.warn('Error loading', url);return null;}
@@ -11,7 +13,7 @@
 
   async function fetchText(url) {
     try {
-      const res = await fetch(url);
+      const res = await fetch(url + cb());
       if (!res.ok) {console.warn('Failed to load', url);return null;}
       return await res.text();
     } catch(e) {console.warn('Error loading', url);return null;}
@@ -35,8 +37,7 @@
     if (!container) return;
     const fallback = container.innerHTML;
     try {
-      const indexRes = await fetch(indexPath);
-      const files = await indexRes.json();
+      const files = await fetchJSON(indexPath);
       const results = await Promise.all(files.map(f => fetchText(prefix + f)));
       const items = results.filter(Boolean).map(parser).filter(Boolean);
       if (items.length) { container.innerHTML = items.join(''); initObservers(); }
@@ -281,8 +282,8 @@
     if (!container) return;
     const fallback = container.innerHTML;
     try {
-      const res = await fetch('admin/content/gallery.json');
-      const data = await res.json();
+      const data = await fetchJSON('admin/content/gallery.json');
+      if (!data) { container.innerHTML = fallback; initObservers(); return; }
       const items = data.gallery || data;
       if (!items.length) { container.innerHTML = fallback; initObservers(); return; }
       container.innerHTML = items.map(img => `
