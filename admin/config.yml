@@ -3,8 +3,8 @@ backend:
   repo: NexdoAdventours/Nexdoadventours
   branch: master
 
-media_folder: "images"
-public_folder: "/images"
+media_folder: "images/gallery"
+public_folder: "/images/gallery"
 
 collections:
   - name: "settings"
@@ -92,7 +92,7 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Tag", name: "tag", widget: "string" }
-      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Image", name: "image", widget: "image", media_folder: "images/blog", public_folder: "/images/blog" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Content", name: "body", widget: "markdown" }
 
@@ -133,6 +133,6 @@ collections:
             name: "gallery"
             widget: "list"
             fields:
-              - { label: "Image Path", name: "image", widget: "string", hint: "Upload via Media button, then copy image path here" }
+              - { label: "Image", name: "image", widget: "image" }
               - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure", required: false }
               - { label: "Hidden (Show More)", name: "hidden", widget: "boolean", default: false, required: false, hint: "Enable to hide behind 'Show More' button" }
