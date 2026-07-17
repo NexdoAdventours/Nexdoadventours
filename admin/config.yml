@@ -37,8 +37,8 @@ collections:
             name: "services"
             widget: "list"
             fields:
-              - { label: "Icon", name: "icon", widget: "string", hint: "e.g. fas fa-safari" }
-              - { label: "Title", name: "title", widget: "string" }
+               - { label: "Icon", name: "icon", widget: "string", hint: "e.g. fas fa-safari" }
+               - { label: "Title", name: "title", widget: "string" }
                - { label: "Description", name: "description", widget: "text" }
            - label: "Destinations"
              name: "destinations"
