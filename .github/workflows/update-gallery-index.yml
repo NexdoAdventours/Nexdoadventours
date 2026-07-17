@@ -1,0 +1,27 @@
+name: Update gallery index
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'admin/content/gallery-files/*.yml'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate gallery index.json
+        run: |
+          dir="admin/content/gallery-files"
+          files=$(ls "$dir" | grep -v index.json | sort -t- -k2 -n)
+          echo '[' > "$dir/index.json"
+          first=true
+          for f in $files; do
+            if [ "$first" = true ]; then first=false; else echo ',' >> "$dir/index.json"; fi
+            echo "  \"$f\"" >> "$dir/index.json"
+          done
+          echo ']' >> "$dir/index.json"
+          cat "$dir/index.json"
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update gallery index"
+          file_pattern: admin/content/gallery-files/index.json

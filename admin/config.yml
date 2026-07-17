@@ -121,18 +121,12 @@ collections:
 
   - name: "gallery"
     label: "Gallery"
-    editor:
-      preview: false
-    files:
-      - name: "images"
-        label: "Gallery Images"
-        file: "admin/content/gallery.json"
-        description: "Upload images and toggle Show More visibility"
-        fields:
-          - label: "Images"
-            name: "gallery"
-            widget: "list"
-            fields:
-              - { label: "Image", name: "image", widget: "image" }
-              - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure", required: false }
-              - { label: "Hidden (Show More)", name: "hidden", widget: "boolean", default: false, required: false, hint: "Enable to hide behind 'Show More' button" }
+    label_singular: "Image"
+    folder: "admin/content/gallery-files"
+    create: true
+    format: "yml"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure", required: false }
+      - { label: "Hidden (Show More)", name: "hidden", widget: "boolean", default: false, required: false, hint: "Enable to hide behind 'Show More' button" }
