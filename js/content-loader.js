@@ -3,6 +3,8 @@
 
   const cacheBust = '?v=' + Math.floor(Date.now() / 60000);
 
+  let settingsCache = null;
+
   async function fetchJSON(url) {
     try {
       const res = await fetch(url + cacheBust);
@@ -19,8 +21,13 @@
     } catch(e) {console.warn('Error loading', url);return null;}
   }
 
+  async function getSettings() {
+    if (!settingsCache) settingsCache = await fetchJSON('admin/content/settings.json');
+    return settingsCache;
+  }
+
   async function loadSettings() {
-    const data = await fetchJSON('admin/content/settings.json');
+    const data = await getSettings();
     if (!data) return;
     document.querySelectorAll('[data-setting]').forEach(el => {
       const key = el.getAttribute('data-setting');
@@ -198,7 +205,7 @@
   async function loadDestinations(containerId, modalDataId) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    const settings = await fetchJSON('admin/content/settings.json');
+    const settings = await getSettings();
     if (!settings || !settings.destinations) return;
     const hiddenDiv = document.getElementById(modalDataId);
     if (hiddenDiv) {
@@ -225,7 +232,7 @@
   }
 
   async function loadServices() {
-    const s = await fetchJSON('admin/content/settings.json');
+    const s = await getSettings();
     if (!s || !s.services) return;
     const grid = document.querySelector('.services-grid');
     if (!grid) return;
@@ -244,7 +251,7 @@
   }
 
   async function loadHero() {
-    const s = await fetchJSON('admin/content/settings.json');
+    const s = await getSettings();
     if (!s) return;
     const badgeEl = document.querySelector('.hero-badge');
     const headingEl = document.querySelector('.hero-content h1');
@@ -258,7 +265,7 @@
   }
 
   async function loadAbout() {
-    const s = await fetchJSON('admin/content/settings.json');
+    const s = await getSettings();
     if (!s) return;
     const titleEl = document.querySelector('#about .about-content h2');
     const contentEl = document.querySelector('#about .about-content');
