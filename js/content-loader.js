@@ -1,7 +1,8 @@
 (function() {
   'use strict';
 
-  const cacheBust = '?v=' + Math.floor(Date.now() / 60000);
+  const CACHE_VERSION = '20260717';
+  const cacheBust = '?v=' + CACHE_VERSION;
 
   let settingsCache = null;
 
@@ -49,7 +50,7 @@
       const items = results.filter(Boolean).map(parser).filter(Boolean);
       if (items.length) { container.innerHTML = items.join(''); initObservers(); }
       else { container.innerHTML = fallback; initObservers(); }
-    } catch(e) { container.innerHTML = fallback; console.warn('Could not load', containerId); }
+    } catch(e) { container.innerHTML = fallback; initObservers(); console.warn('Could not load', containerId); }
   }
 
   async function loadPackages(containerId) {
@@ -159,7 +160,7 @@
           <div id="${contentId}" class="blog-full" style="display:none;">
             ${markdownToHtml(body)}
           </div>
-          <a href="#" onclick="toggleBlog('${contentId}');return false;" class="read-more">Read More <i class="fas fa-chevron-down"></i></a>
+          <a href="#" onclick="toggleBlog('${contentId}', this);return false;" class="read-more">Read More <i class="fas fa-chevron-down"></i></a>
         </div>
       </article>`;
   }
@@ -178,28 +179,33 @@
     return '<p>' + html + '</p>';
   }
 
-  function parseReviewYaml(yml) {
-    const nameMatch = yml.match(/name:\s*"([^"]+)"/);
-    const ratingMatch = yml.match(/rating:\s*(\d+)/);
-    const textMatch = yml.match(/text:\s*"([^"]+)"/);
-    if (!nameMatch || !textMatch) return null;
-    const stars = parseInt(ratingMatch ? ratingMatch[1] : 5);
-    return `<div class="review-card animate-on-scroll"><div class="stars">${'<i class="fas fa-star"></i>'.repeat(stars)}</div><p>"${textMatch[1]}"</p><h4>- ${nameMatch[1]}</h4></div>`;
-  }
-
   async function loadReviews(containerId) {
-    await loadContent(containerId, 'admin/content/reviews/index.json', 'admin/content/reviews/', parseReviewYaml);
-  }
-
-  function parseFaqYaml(yml) {
-    const q = yml.match(/question:\s*"([^"]+)"/);
-    const a = yml.match(/answer:\s*"([^"]+)"/);
-    if (!q || !a) return null;
-    return `<div class="faq-item animate-on-scroll"><div class="faq-question"><span>${q[1]}</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer"><div class="faq-answer-content">${a[1]}</div></div></div>`;
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const fallback = container.innerHTML;
+    try {
+      const data = await fetchJSON('admin/content/reviews/reviews.json');
+      if (!data || !data.length) { container.innerHTML = fallback; initObservers(); return; }
+      container.innerHTML = data.map(r => {
+        const stars = '<i class="fas fa-star"></i>'.repeat(Math.min(r.rating || 5, 5));
+        return `<div class="review-card animate-on-scroll"><div class="stars">${stars}</div><p>"${r.text}"</p><h4>- ${r.name}</h4></div>`;
+      }).join('');
+      initObservers();
+    } catch(e) { container.innerHTML = fallback; initObservers(); }
   }
 
   async function loadFAQ(containerId) {
-    await loadContent(containerId, 'admin/content/faq/index.json', 'admin/content/faq/', parseFaqYaml);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const fallback = container.innerHTML;
+    try {
+      const data = await fetchJSON('admin/content/faq/faq.json');
+      if (!data || !data.length) { container.innerHTML = fallback; initObservers(); return; }
+      container.innerHTML = data.map(f => {
+        return `<div class="faq-item animate-on-scroll"><div class="faq-question"><span>${f.question}</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer"><div class="faq-answer-content">${f.answer}</div></div></div>`;
+      }).join('');
+      initObservers();
+    } catch(e) { container.innerHTML = fallback; initObservers(); }
   }
 
   async function loadDestinations(containerId, modalDataId) {
@@ -284,20 +290,9 @@
     }
   }
 
-  function parseGalleryYaml(yml) {
-    const lines = yml.split('\n');
-    const data = {};
-    lines.forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx < 0) return;
-      const k = line.substring(0, idx).trim();
-      let v = line.substring(idx + 1).trim().replace(/^["']|["']$/g, '');
-      if (k === 'hidden') v = v === 'true';
-      data[k] = v;
-    });
-    if (!data.image) return '';
-    const hidden = data.hidden ? ' gallery-hidden' : '';
-    return `<div class="gallery-item${hidden}"><img src="${data.image}" alt="${data.alt || 'Uganda adventure'}" loading="lazy"></div>`;
+  function renderGalleryItem(item) {
+    const hidden = item.hidden ? ' gallery-hidden' : '';
+    return `<div class="gallery-item${hidden}"><img src="${item.image}" alt="${item.alt || 'Uganda adventure'}" loading="lazy"></div>`;
   }
 
   async function loadGallery() {
@@ -305,20 +300,9 @@
     if (!container) return;
     const fallback = container.innerHTML;
     try {
-      let files = [];
-      try {
-        const res = await fetch('https://api.github.com/repos/NexdoAdventours/Nexdoadventours/contents/admin/content/gallery-files', {cache: 'no-cache'});
-        if (res.ok) {
-          const data = await res.json();
-          files = data.filter(f => f.name.endsWith('.yml') && f.name !== 'index.json').map(f => f.name);
-        }
-      } catch(e) {}
-      if (!files.length) files = await fetchJSON('admin/content/gallery-files/index.json') || [];
-      if (!files.length) { container.innerHTML = fallback; initObservers(); return; }
-      const results = await Promise.all(files.map(f => fetchText('admin/content/gallery-files/' + f)));
-      const items = results.filter(Boolean).map(parseGalleryYaml).filter(Boolean);
-      if (!items.length) { container.innerHTML = fallback; initObservers(); return; }
-      container.innerHTML = items.join('');
+      const data = await fetchJSON('admin/content/gallery-files/gallery.json');
+      if (!data || !data.length) { container.innerHTML = fallback; initObservers(); return; }
+      container.innerHTML = data.map(renderGalleryItem).join('');
       initObservers();
     } catch(e) { container.innerHTML = fallback; initObservers(); console.warn('Could not load gallery'); }
   }

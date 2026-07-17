@@ -8,16 +8,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // ------- Hero Slideshow -------
   const slideshow = document.getElementById('heroSlideshow');
   if (slideshow) {
-    const heroImages = [];
-    for (let i = 1; i <= 168; i++) {
-      heroImages.push('images/gallery/gallery-' + i + '.jpg');
-    }
-    // Shuffle and pick first 10
-    const shuffled = heroImages.sort(() => Math.random() - 0.5).slice(0, 10);
-    shuffled.forEach(function(src, index) {
+    // Use small images for hero to avoid loading multi-MB gallery images
+    const heroImages = [
+      'images/gallery/gallery-1.jpg',
+      'images/gallery/gallery-2.jpg',
+      'images/gallery/gallery-3.jpg',
+      'images/gallery/gallery-4.jpg',
+      'images/gallery/gallery-5.jpg',
+      'images/gallery/gallery-134.jpg'
+    ];
+    heroImages.forEach(function(src, index) {
       const div = document.createElement('div');
       div.className = 'slide' + (index === 0 ? ' active' : '');
-      div.style.backgroundImage = "url('" + src + "')";
+      if (index === 0) {
+        div.style.backgroundImage = "url('" + src + "')";
+      } else {
+        const img = new Image();
+        img.onload = function() { div.style.backgroundImage = "url('" + src + "')"; };
+        img.src = src;
+      }
       slideshow.appendChild(div);
     });
     let currentSlide = 0;
