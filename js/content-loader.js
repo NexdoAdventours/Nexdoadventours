@@ -275,7 +275,7 @@
       contentEl.querySelectorAll('p').forEach(p => p.remove());
       s.aboutText.split('\n\n').filter(Boolean).forEach(text => {
         const p = document.createElement('p');
-        p.textContent = text;
+        p.innerHTML = text;
         contentEl.insertBefore(p, featList);
       });
     }
