@@ -118,3 +118,21 @@ collections:
     fields:
       - { label: "Question", name: "question", widget: "string" }
       - { label: "Answer", name: "answer", widget: "text" }
+
+  - name: "gallery"
+    label: "Gallery"
+    editor:
+      preview: false
+    files:
+      - name: "images"
+        label: "Gallery Images"
+        file: "admin/content/gallery.json"
+        description: "Manage gallery images - upload, reorder, hide/show"
+        fields:
+          - label: "Images"
+            name: "gallery"
+            widget: "list"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string", default: "Uganda adventure", required: false }
+              - { label: "Hidden (Show More)", name: "hidden", widget: "boolean", default: false, required: false, hint: "Enable to hide behind 'Show More' button" }

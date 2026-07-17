@@ -290,13 +290,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Make gallery images clickable for lightbox (not destination images)
-  document.querySelectorAll('.gallery-item img').forEach(img => {
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', function(e) {
-      e.stopPropagation();
-      openLightbox(this.src);
-    });
+  // Make gallery images clickable for lightbox (event delegation for dynamic content)
+  document.getElementById('galleryGrid')?.addEventListener('click', function(e) {
+    const img = e.target.closest('.gallery-item img');
+    if (img) { e.stopPropagation(); openLightbox(img.src); }
   });
 
 });

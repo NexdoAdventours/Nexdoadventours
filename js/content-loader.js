@@ -276,6 +276,24 @@
     }
   }
 
+  async function loadGallery() {
+    const container = document.getElementById('galleryGrid');
+    if (!container) return;
+    const fallback = container.innerHTML;
+    try {
+      const res = await fetch('admin/content/gallery.json');
+      const data = await res.json();
+      const items = data.gallery || data;
+      if (!items.length) { container.innerHTML = fallback; initObservers(); return; }
+      container.innerHTML = items.map(img => `
+        <div class="gallery-item${img.hidden ? ' gallery-hidden' : ''}">
+          <img src="${img.image}" alt="${img.alt || 'Uganda adventure'}" loading="lazy">
+        </div>
+      `).join('');
+      initObservers();
+    } catch(e) { container.innerHTML = fallback; initObservers(); console.warn('Could not load gallery'); }
+  }
+
   function initObservers() {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -298,6 +316,7 @@
     loadBlogPosts('blogPosts');
     loadReviews('reviewsGrid');
     loadFAQ('faqContainer');
+    loadGallery();
     setTimeout(initObservers, 200);
   });
 })();
