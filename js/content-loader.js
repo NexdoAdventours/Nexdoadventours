@@ -284,24 +284,22 @@
     }
   }
 
-  function parseGalleryYaml(yml) {
-    const lines = yml.split('\n');
-    const data = {};
-    lines.forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx < 0) return;
-      const k = line.substring(0, idx).trim();
-      let v = line.substring(idx + 1).trim().replace(/^["']|["']$/g, '');
-      if (k === 'hidden') v = v === 'true';
-      data[k] = v;
-    });
-    if (!data.image) return '';
-    const hidden = data.hidden ? ' gallery-hidden' : '';
-    return `<div class="gallery-item${hidden}"><img src="${data.image}" alt="${data.alt || 'Uganda adventure'}" loading="lazy"></div>`;
-  }
-
   async function loadGallery() {
-    await loadContent('galleryGrid', 'admin/content/gallery-files/index.json', 'admin/content/gallery-files/', parseGalleryYaml);
+    const container = document.getElementById('galleryGrid');
+    if (!container) return;
+    const fallback = container.innerHTML;
+    try {
+      const data = await fetchJSON('admin/content/gallery.json');
+      if (!data) { container.innerHTML = fallback; initObservers(); return; }
+      const items = data.gallery || data;
+      if (!items.length) { container.innerHTML = fallback; initObservers(); return; }
+      container.innerHTML = items.map(img => `
+        <div class="gallery-item${img.hidden ? ' gallery-hidden' : ''}">
+          <img src="${img.image}" alt="${img.alt || 'Uganda adventure'}" loading="lazy">
+        </div>
+      `).join('');
+      initObservers();
+    } catch(e) { container.innerHTML = fallback; initObservers(); console.warn('Could not load gallery'); }
   }
 
   function initObservers() {
