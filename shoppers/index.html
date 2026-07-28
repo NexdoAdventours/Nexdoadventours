@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexdo Shoppers – Kampala's Premium Gadget Store</title>
+<meta name="description" content="Kampala's trusted gadget store. Shop the latest phones, headphones, gaming, smart home, and tech accessories. Free pickup in Kampala.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+<div class="header-inner">
+  <a href="index.html" class="logo">
+    <img src="images/logo.svg" alt="Nexdo Shoppers" style="height:56px;width:auto;">
+  </a>
+  <div class="search-wrap">
+    <i class="fas fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Search products..." autocomplete="off">
+  </div>
+  <button class="cart-btn" id="cartToggle">
+    <i class="fas fa-shopping-bag"></i>
+    <span class="cart-total-header" id="cartTotalHeader">0 UGX</span>
+    <span class="cart-badge hide" id="cartBadge">0</span>
+  </button>
+</div>
+</header>
+
+<section class="hero">
+<div class="hero-bg" id="heroBg">
+  <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=1600')"></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1600')"></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1484704849700-f032a568e944?w=1600')"></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1600')"></div>
+</div>
+<div class="hero-glow"></div>
+<div class="hero-content">
+  <h1>Premium Tech, <span>Unbeatable Prices</span></h1>
+  <p>Kampala's trusted destination for the latest gadgets, accessories, and electronics. Shop with confidence and enjoy fast delivery across Uganda.</p>
+  <div class="hero-badges">
+    <span class="hero-badge"><i class="fas fa-truck"></i> Free pickup</span>
+    <span class="hero-badge"><i class="fas fa-shield-alt"></i> 1-Year Warranty</span>
+    <span class="hero-badge"><i class="fas fa-wallet"></i> Pay on Delivery</span>
+    <span class="hero-badge"><i class="fab fa-whatsapp"></i> 24/7 Support</span>
+  </div>
+</div>
+</section>
+
+<section class="categories" id="categories">
+<div class="cat-scroll" id="catScroll">
+  <button class="cat-btn active" data-cat="all">All</button>
+  <button class="cat-btn" data-cat="Charging">Charging</button>
+  <button class="cat-btn" data-cat="Cases & Guards">Cases & Guards</button>
+  <button class="cat-btn" data-cat="Computing">Computing</button>
+  <button class="cat-btn" data-cat="Gaming">Gaming</button>
+  <button class="cat-btn" data-cat="Headphones & Earbuds">Headphones & Earbuds</button>
+  <button class="cat-btn" data-cat="Phones">Phones</button>
+  <button class="cat-btn" data-cat="Photography">Photography</button>
+  <button class="cat-btn" data-cat="Speakers">Speakers</button>
+  <button class="cat-btn" data-cat="Power Banks">Power Banks</button>
+  <button class="cat-btn" data-cat="Smart Home">Smart Home</button>
+  <button class="cat-btn" data-cat="Kids">Kids</button>
+  <button class="cat-btn" data-cat="Wearables & Tags">Wearables & Tags</button>
+  <button class="cat-btn" data-cat="Tablets">Tablets</button>
+  <button class="cat-btn" data-cat="Home Cinema">Home Cinema</button>
+  <button class="cat-btn" data-cat="Microphones">Microphones</button>
+  <button class="cat-btn" data-cat="Streaming">Streaming</button>
+  <button class="cat-btn" data-cat="Car Tech">Car Tech</button>
+  <button class="cat-btn" data-cat="Tech Bags">Tech Bags</button>
+  <button class="cat-btn" data-cat="Storage">Storage</button>
+  <button class="cat-btn" data-cat="Home Care">Home Care</button>
+  <button class="cat-btn" data-cat="Kitchen">Kitchen</button>
+  <button class="cat-btn" data-cat="Health">Health</button>
+  <button class="cat-btn" data-cat="Travel & Outdoor">Travel & Outdoor</button>
+</div>
+</section>
+
+<section class="featured-section" id="featuredSection">
+<div class="products-header">
+  <h2>🔥 Featured & Best Sellers</h2>
+</div>
+<div class="products-grid" id="featuredGrid"></div>
+</section>
+
+<section class="products-section">
+<div class="products-header">
+  <h2>All Products <span id="productCount"></span></h2>
+  <div class="sort-wrap">
+    <i class="fas fa-arrow-down-wide-short"></i>
+    <select id="sortSelect">
+      <option value="default">Default</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+</div>
+<div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-sidebar-header">
+    <h3>Shopping Cart <span id="cartItemCount">(0)</span></h3>
+    <button class="cart-close" id="cartClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-sidebar-footer" id="cartFooter">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span class="total-amount" id="cartTotal">0 UGX</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" disabled>
+      <i class="fas fa-shopping-bag"></i> Checkout
+    </button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+    <h2>Complete Your Order</h2>
+    <p class="modal-sub">Review your items and choose how you'd like to receive them.</p>
+
+    <h3><i class="fas fa-user"></i> Your Details</h3>
+    <div class="customer-fields">
+      <input type="text" id="custName" placeholder="Full name *" class="cust-input" autocomplete="name">
+      <input type="tel" id="custPhone" placeholder="Phone number *" class="cust-input" autocomplete="tel">
+    </div>
+
+    <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+    <ul class="order-items-list" id="orderItemsList"></ul>
+
+    <h3><i class="fas fa-shipping-fast"></i> Delivery Method</h3>
+    <p class="modal-sub" style="margin-top:-8px;margin-bottom:12px">Choose pickup for free or delivery with a location-based fee.</p>
+    <div class="delivery-method" id="deliveryMethod">
+      <label class="selected">
+        <input type="radio" name="delivery" value="pickup" checked>
+        <i class="fas fa-store"></i> Shop In (Pickup) – Free
+      </label>
+      <label>
+        <input type="radio" name="delivery" value="delivery">
+        <i class="fas fa-truck"></i> Delivery – Fee applies
+      </label>
+    </div>
+
+    <div class="location-select-wrap" id="locationWrap" style="display:none">
+      <label>Select your location</label>
+      <div class="select-wrap">
+        <select id="locationSelect">
+          <option value="">— Choose location —</option>
+          <option value="Kampala">Kampala – 5,000 UGX</option>
+          <option value="Nansana">Nansana – 8,000 UGX</option>
+          <option value="Mukono">Mukono – 10,000 UGX</option>
+          <option value="Wakiso">Wakiso – 7,000 UGX</option>
+          <option value="Gayaza">Gayaza – 8,000 UGX</option>
+          <option value="Entebbe">Entebbe – 12,000 UGX</option>
+          <option value="Jinja">Jinja – 15,000 UGX</option>
+          <option value="other">Other area – Contact us</option>
+        </select>
+        <i class="fas fa-chevron-down select-arrow"></i>
+      </div>
+      <div class="other-location-note" id="otherLocationNote" style="display:none">
+        <i class="fas fa-info-circle"></i> For other areas, please contact us on WhatsApp after ordering.
+      </div>
+    </div>
+
+    <div class="summary-details">
+      <div class="summary-row"><span class="label">Subtotal</span><span id="modalSubtotal">0 UGX</span></div>
+      <div class="summary-row" id="deliveryFeeRow" style="display:none"><span class="label">Delivery Fee</span><span id="modalDeliveryFee">0 UGX</span></div>
+      <div class="summary-row total"><span class="label">Total</span><span id="modalTotal">0 UGX</span></div>
+    </div>
+
+    <button class="whatsapp-btn" id="whatsappOrder">
+      <i class="fab fa-whatsapp"></i> Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#" class="mnav-item active" onclick="scrollToTop();return false">
+    <i class="fas fa-home"></i><span>Home</span>
+  </a>
+  <a href="#categories" class="mnav-item" onclick="closeMobileNav()">
+    <i class="fas fa-th-large"></i><span>Categories</span>
+  </a>
+  <a href="#" class="mnav-item" id="mnavCart" onclick="openCart();return false">
+    <i class="fas fa-shopping-bag"></i><span>Cart</span>
+    <span class="mnav-badge hide" id="mnavBadge">0</span>
+  </a>
+  <a href="https://wa.me/256782725895" target="_blank" class="mnav-item">
+    <i class="fab fa-whatsapp"></i><span>Support</span>
+  </a>
+</nav>
+
+<!-- Image Lightbox -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <div class="lightbox-content" id="lightboxContent">
+    <img id="lightboxImg" src="" alt="Product image">
+  </div>
+</div>
+
+<footer>
+<div class="footer-inner">
+  <div>
+    <h4><i class="fas fa-store"></i> Nexdo Shoppers</h4>
+    <p>Kampala's premier gadget store. Quality tech, fair prices, trusted service.</p>
+    <div class="footer-social">
+      <a href="https://wa.me/256782725895" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+  <div>
+    <h4>Quick Links</h4>
+    <a href="index.html">Home</a>
+    <a href="#">All Products</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+  </div>
+  <div>
+    <h4>Contact</h4>
+    <p><i class="fab fa-whatsapp"></i> +256 782 725895</p>
+    <p><i class="fas fa-map-marker-alt"></i> Kampala, Uganda</p>
+    <p><i class="fas fa-envelope"></i> hello@nexdoshoppers.com</p>
+    <p><i class="fas fa-clock"></i> Mon–Sat: 8AM–8PM</p>
+  </div>
+  <div>
+    <h4>Services</h4>
+    <a href="#">Free Pickup</a>
+    <a href="#">Delivery</a>
+    <a href="#">Warranty Info</a>
+    <a href="#">Bulk Orders</a>
+  </div>
+</div>
+<div class="footer-bottom">&copy; 2026 Nexdo Shoppers. All rights reserved. Made with <i class="fas fa-heart" style="color:var(--orange)"></i> in Kampala.</div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
