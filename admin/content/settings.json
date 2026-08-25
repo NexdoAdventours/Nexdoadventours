@@ -45,15 +45,15 @@
     {"month": "May", "event": "Labour Day Celebrations"},
     {"month": "Jun", "event": "Heroes Day Events"},
     {"month": "Jul", "event": "Family Holiday Packages"},
-    {"month": "Aug", "event": "Tugende Efort Festival"},
+    {"month": "Aug", "event": "Fort Portal Adventure"},
     {"month": "Sep", "event": "Nyege Nyege Festival"},
     {"month": "Oct", "event": "Independence Day"},
     {"month": "Nov", "event": "Cultural Tours & Festivals"},
     {"month": "Dec", "event": "Christmas Celebrations"}
   ],
   "tugendeEfort": {
-    "title": "Tugende Efort — Fort Portal Experience",
+    "title": "Fort Portal Experience",
     "dates": "28th – 30th Aug 2026 (3 Days / 2 Nights)",
-    "description": "Join us in August for Tugende Efort, an exclusive Nexdo Adventours experience in the heart of the Rwenzori region. Enjoy authentic culture, music, and unforgettable moments curated by our team."
+    "description": "Join us in August for Fort Portal, an exclusive Nexdo Adventours experience in the heart of the Rwenzori region. Enjoy authentic culture, music, and unforgettable moments curated by our team."
   }
 }
