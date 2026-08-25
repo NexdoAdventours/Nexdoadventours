@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexdo Events – House of Events & Gifts</title>
+    <meta name="description" content="Nexdo Events - Shop flowers, gift packs, perfumes, gadgets, cakes, branded gifts, and wines. Surprise your loved ones with gifts from Nexdo today!">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/shop.css" />
+</head>
+<body>
+
+    <!-- LOADING BANNER -->
+    <div class="loading-banner">
+        <div class="banner-content">
+            <span>Welcome to Our Shop, Surprise your Loved Ones with Gifts from Nexdo Today!</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-inner">
+            <div class="brand">
+                <a href="index.html" class="brand-link" aria-label="Go to home">
+                    <img src="https://nexdoevents.vercel.app/images/Logo/nexdologo.png" alt="Nexdo Events logo" class="brand-logo" />
+                </a>
+                <a href="index.html" class="logo"> Nexdo <span>.</span></a>
+            </div>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#bundle-section" class="active">Shop All</a>
+                <a href="#hub-section">Collections</a>
+                <a href="#flowers">Flowers</a>
+                <a href="#giftboxes">Gift Packs</a>
+                <a href="#perfumes">Perfumes</a>
+                <a href="#gadgets">Gadgets</a>
+                <a href="#cakes">Cakes</a>
+                <a href="#branded">Branded Gifts</a>
+                <a href="#wines">Liqour & Wine</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-wrap" id="searchWrap">
+                    <input type="text" id="searchInput" placeholder="Search" />
+                    <span class="clear-search" id="clearSearch"><i class="fas fa-times-circle"></i></span>
+                    <button type="button" class="search-toggle" id="searchToggle" aria-label="Open search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div class="wishlist-icon" id="wishlistIcon" title="Wishlist">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count" id="wishlistCount">0</span>
+                </div>
+
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-cart-shopping"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BUNDLE SECTION -->
+    <section class="bundle-section" id="bundle-section">
+        <div class="container">
+            <div class="bundle-header">
+                <div class="bundle-header-left">
+                    <h2 class="section-title" id="bundle-title">Shop All</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="bundle-header-right">
+                    <div class="bundle-tabs" id="bundle-tabs"></div>
+                </div>
+            </div>
+            <div class="bundle-products-container">
+                <div class="bundle-products-scroll" id="bundle-products-scroll"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HUB SECTION -->
+    <section class="hub-section" id="hub-section">
+        <div class="container">
+            <div class="hub-header">
+                <div class="hub-header-left">
+                    <h2 class="section-title" id="hub-heading"></h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="hub-header-right">
+                    <div class="hub-tabs" id="hub-tabs"></div>
+                </div>
+            </div>
+            <div class="hub-products-container">
+                <div class="hub-products-scroll" id="hub-products-scroll"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories-home hide-when-search" id="categoryGridSection">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="gold-line"></div>
+            <div class="category-grid">
+                <div class="category-card" onclick="document.getElementById('flowers').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Flowers</h3>
+                    <p>Bouquets & Vase Arrangements</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('giftboxes').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-box"></i>
+                    <h3>Gift Packs</h3>
+                    <p>Baskets & Boxes</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('perfumes').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-spray-can"></i>
+                    <h3>Perfumes</h3>
+                    <p>Him, Her, Unisex</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('gadgets').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-headphones"></i>
+                    <h3>Gadgets</h3>
+                    <p>Phones, speakers & more</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('cakes').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h3>Cakes</h3>
+                    <p>Wedding, birthday & more</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('branded').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Branded Gifts</h3>
+                    <p>T-shirts, caps & others</p>
+                </div>
+                <div class="category-card" onclick="document.getElementById('wines').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-wine-glass"></i>
+                    <h3>Liqour & Wine</h3>
+                    <p>Wines, spirits & more</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH RESULTS -->
+    <section id="searchResultsSection">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Search Results</h2>
+                    <div class="gold-line"></div>
+                </div>
+            </div>
+            <div class="product-grid" id="searchResultsGrid"></div>
+        </div>
+    </section>
+
+    <!-- FLOWERS -->
+    <section class="products-section category-anchor hide-when-search" id="flowers">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Flowers</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="flowers">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="flowers">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="gift">Flower Gifts</button>
+                <button data-sub="wedding">Wedding Bouquets</button>
+                <button data-sub="funeral">Funeral Tributes</button>
+                <button data-sub="Vase Arrangement">Vase Arrangement</button>
+            </div>
+            <div class="product-grid" id="grid-flowers"></div>
+        </div>
+    </section>
+
+    <!-- GIFT PACKS -->
+    <section class="products-section category-anchor hide-when-search" id="giftboxes">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Gift Packs</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="giftboxes">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="giftboxes">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="Gift Baskets">Gift Baskets</button>
+                <button data-sub="Gift Boxes">Gift Boxes</button>
+                <button data-sub="Baby Hampers">Baby Hampers</button>
+                <button data-sub="Watches & Jewelry">Watches & Jewelry</button>
+            </div>
+            <div class="product-grid" id="grid-giftboxes"></div>
+        </div>
+    </section>
+
+    <!-- PERFUMES -->
+    <section class="products-section category-anchor hide-when-search" id="perfumes">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Perfumes</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="perfumes">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="perfumes">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="Her">Her</button>
+                <button data-sub="Him">Him</button>
+                <button data-sub="Unisex">Unisex</button>
+            </div>
+            <div class="product-grid" id="grid-perfumes"></div>
+        </div>
+    </section>
+
+    <!-- GADGETS -->
+    <section class="products-section category-anchor hide-when-search" id="gadgets">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Gadgets</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="gadgets">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="gadgets">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="Phones">Phones</button>
+                <button data-sub="Speakers">Speakers</button>
+                <button data-sub="Gaming">Gaming</button>
+                <button data-sub="Watches">Watches</button>
+                <button data-sub="Accessories">Accessories</button>
+            </div>
+            <div class="product-grid" id="grid-gadgets"></div>
+        </div>
+    </section>
+
+    <!-- CAKES -->
+    <section class="products-section category-anchor hide-when-search" id="cakes">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Cakes</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="cakes">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="cakes">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="Birthday">Birthday Cakes</button>
+                <button data-sub="Cup Cakes">Cup Cakes</button>
+                <button data-sub="Others">Others</button>
+            </div>
+            <div class="product-grid" id="grid-cakes"></div>
+        </div>
+    </section>
+
+    <!-- BRANDED GIFTS -->
+    <section class="products-section category-anchor hide-when-search" id="branded">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Branded Gifts</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="branded">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            <div class="subcategory-tabs" data-category="branded">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="T-shirts">T-Shirts</button>
+                <button data-sub="Caps">Caps</button>
+                <button data-sub="Others">Others</button>
+                <button data-sub="Cards">Gift Cards</button>
+            </div>
+            <div class="product-grid" id="grid-branded"></div>
+        </div>
+    </section>
+
+    <!-- WINES -->
+    <section class="products-section category-anchor hide-when-search" id="wines">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Liqour & Wine</h2>
+                    <div class="gold-line"></div>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" data-category="wines">
+                        <option value="default">Sort by</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+            <div class="subcategory-tabs" data-category="wines">
+                <button class="active" data-sub="all">All</button>
+                <button data-sub="Wines & Sparkling">Wines & Sparkling</button>
+                <button data-sub="Whisky, Spirits & Tequila">Whisky, Spirits & Tequila</button>
+                <button data-sub="Liqueurs, Cream & Aperitifs">Liqueurs, Cream & Aperitifs</button>
+
+            </div>
+            <div class="product-grid" id="grid-wines"></div>
+        </div>
+    </section>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+    <div class="wishlist-sidebar" id="wishlistSidebar">
+        <div class="wishlist-header">
+            <h2><i class="fas fa-heart"></i> Wishlist</h2>
+            <span class="wishlist-close" id="wishlistClose">&times;</span>
+        </div>
+        <div class="wishlist-items" id="wishlistItems">
+            <div class="empty-wishlist">
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <span class="cart-close" id="cartClose">&times;</span>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <i class="fas fa-cart-shopping"></i>
+                <p>Your cart is empty.</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="total">
+                <span>Total</span>
+                <span id="cartTotal">UGX 0</span>
+            </div>
+            <button class="btn" id="checkoutBtn"><i class="fab fa-whatsapp"></i> Complete Order</button>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-box">
+            <h2>Order Details</h2>
+            <p class="sub">We'll send your order summary via WhatsApp.</p>
+            <form id="checkoutForm">
+                <label for="deliveryDate">Delivery Date</label>
+                <input type="date" id="deliveryDate" required/>
+                <p class="delivery-info" id="deliveryInfo"></p>
+
+                <label for="deliveryZone">Delivery Zone</label>
+                <select id="deliveryZone" required>
+                    <option value="">Select delivery zone</option>
+                    <option value="zone1">Zone 1: 0-5km from CBD (UGX 10,000)</option>
+                    <option value="zone2">Zone 2: 5-10km from CBD (UGX 20,000)</option>
+                    <option value="zone3">Zone 3: 10-20km from CBD (UGX 30,000)</option>
+                    <option value="zone4">Zone 4: 20km+ (Quote on request)</option>
+                    <option value="zone5">Zone 5: Upcountry (UGX 15,000)</option>
+                </select>
+
+                <div class="zone-details" id="zoneDetails" style="display: none;">
+                    <p class="zone-info" id="zoneInfo"></p>
+                </div>
+
+                <label for="deliveryArea">Specific Area</label>
+                <select id="deliveryArea" required disabled>
+                    <option value="">Select zone first</option>
+                </select>
+
+                <label for="deliveryPlace">Place of Delivery</label>
+                <input type="text" id="deliveryPlace" placeholder="e.g. Acacia Mall, Kampala" required />
+
+                <label for="deliveryTime">Delivery Time (9 am – 7 pm)</label>
+                <input type="time" id="deliveryTime" min="09:00" max="19:00" required/>
+
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="checkoutSubtotal">UGX 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span id="deliveryFee">UGX 0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="checkoutTotal">UGX 0</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn-secondary" id="cancelCheckout">CANCEL</button>
+                    <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> SEND ORDER</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- RECENTLY VIEWED -->
+    <section class="recently-viewed-section hide-when-search" id="recentlyViewedSection" style="display:none;">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Recently Viewed</h2>
+                    <div class="gold-line"></div>
+                </div>
+            </div>
+            <div class="recently-viewed-scroll" id="recentlyViewedScroll"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Nexdo Events<span>.</span></div>
+            <p style="margin-top:0.3rem;">House of Events & gifting, delivered with care.</p>
+            <div class="socials">
+                <a href="https://www.instagram.com/nexdoevents"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/nexdoevents"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/256706538815"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:nexdoevents@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p style="margin-top:1.2rem; font-size:0.8rem;">&copy; 2026 Nexdo Events. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/256706538815" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span>Talk to Us</span>
+    </a>
+
+    <!-- Image Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close image">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="Product Image" class="lightbox-image" id="lightboxImage">
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-box">
+            <button class="product-detail-close" id="productDetailClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="product-detail-content">
+                <div class="product-detail-image">
+                    <img src="" alt="" id="detailImage">
+                </div>
+                <div class="product-detail-info">
+                    <h2 id="detailName"></h2>
+                    <p class="product-detail-sub" id="detailSub"></p>
+                    <p class="product-detail-price" id="detailPrice"></p>
+                    <button class="btn" id="detailAddToCart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/shop.js"></script>
+</body>
+</html>

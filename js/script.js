@@ -54,6 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.classList.remove('active');
       });
     });
+
+    const navClose = document.querySelector('.nav-close');
+    if (navClose) {
+      navClose.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    }
   }
 
   // ------- Active Nav Link -------

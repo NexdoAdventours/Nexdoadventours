@@ -132,6 +132,8 @@ img { max-width: 100%; height: auto; }
 .hamburger.active span:nth-child(2) { opacity: 0; }
 .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
 
+.nav-close { display: none; position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dark); z-index: 10; }
+
 .hero {
   display: flex;
   align-items: center;
@@ -840,6 +842,7 @@ img { max-width: 100%; height: auto; }
     box-shadow: -5px 0 30px rgba(0,0,0,0.1);
   }
   .nav-links.active { right: 0; }
+  .nav-close { display: block; }
   .hero { min-height: 80vh; }
   .hero h1 { font-size: 2.2rem; }
   .hero p { font-size: 1rem; }
